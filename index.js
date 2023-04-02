@@ -74,21 +74,16 @@ function cumleKur(birinci, ikinci="", ucuncu="", dorduncu="", besinci=""){
 }
 
 /* (Oto test yok) cumleKur fonksiyonuna yalnızca 1 parametre göndererek "Hello World!" stringini elde edin, sonucu konsolde gözlemleyin */
-
-
-
+console.log(cumleKur("Hello World!"));
 
 /* (Oto test yok) cumleKur fonksiyonuna yalnızca 2 parametre göndererek "Hello World!" stringini elde edin, sonucu konsolde gözlemleyin */
-
+console.log(cumleKur("Hello","World!" ));
 
 
 
 /* (Oto test var) cumleKur fonksiyonuna 5 parametre göndererek "Ben iyi bir yazılımcı olacağım!" stringini elde edin, sonucu `bircumle` değişkenine atayın ve konsolde gözlemleyin */
-var bircumle;
-
-/* kodlar buraya */
-
-
+var bircumle = cumleKur("Ben ", "iyi ", "bir ", "yazılımcı ", "olacağım!");
+console.log(bircumle);
 
 //		Sayfanın en üstünde global olarak tanımlanmış `cumleler` adında bir dizi bulunmaktadır. Bu dizinin içinde en çok 5 en az 1 adet string bulunan diziler bulunmaktadır. Aşağıdaki görevlerde aksi belirtilmedikçe bu dizi kullanılacaktır.
 
@@ -102,13 +97,18 @@ var bircumle;
 			4. Oluşturulan her cümle yeni bir dizi oluşturulup o dizinin içine aktarılacak. 
 			5. Oluşturulan yeni dizi döndürülecek.
 	*/
+	function cumlelereDonustur(cumleler, ayrac = ",") {
+		// cumleler dizisindeki her eleman için
+		return cumleler.map(function(cumle) {
+		  // cumle dizisindeki kelimeleri ayrac ile birleştir ve döndür
+		  return cumle.join(ayrac);
+		});
+	  }
+	  console.log(cumlelereDonustur(cumleler, " "));
 	
-
-function cumlelereDonustur(/* kodlar buraya */ ){
-	/* kodlar buraya */
-}
-
-
+	
+	  
+	
 
 /* GÖREV 2:
 		paragrafOlustur fonksiyonuna aşağıdakileri uygulayın.
@@ -119,33 +119,48 @@ function cumlelereDonustur(/* kodlar buraya */ ){
 			5. Oluşturulan bu dizinin tek sayılı anahtarlarını(index) [1,3,5,7,9] kullanarak ilk 5 elemanı geriçağırım olarak çağırılan cumleKur dizisinin parametreleri olarak aktarılarak çağırılacak ÖRNEK: callback(dizi[1],dizi[2],dizi[3],dizi[5],dizi[7])
 			6. Oluşturulan paragraf döndürülecek
 	*/
-	
-function paragrafOlustur(/* kodlar buraya */ ){
-	/* kodlar buraya */ 
-}
 
+	function paragrafOlustur(cumleler, cumleKurcallback, cumlelereDonusturcallback) {
+		// yeni bir dizi oluştur
+		let yeniDizi = [];
+		// cumlelereDonustur fonksiyonunu cumleler ve " " ayracıyla çağır ve sonucu yeniDiziye aktar
+		yeniDizi = cumlelereDonustur(cumleler, " ");
+		// yeniDizinin tek sayılı anahtarlarını kullanarak ilk 5 elemanı cumleKur fonksiyonunun parametreleri olarak aktar ve çağır
+		let paragraf = cumleKur(yeniDizi[1], yeniDizi[3], yeniDizi[5], yeniDizi[7], yeniDizi[9]);
+		// oluşturulan paragrafı döndür
+		return paragraf;
+	  }
+
+	  console.log(paragrafOlustur(cumleler,cumleKur,cumlelereDonustur));
 
 /* 	GÖREV 3:
 		Yukarıda isimleri sebzeler ve meyveler olan 2 dizi bulunmaktadır. Bu dizileri kullanarak aşağıdaki görevleri tamamlayın.
 			3a. meyveler dizisinin ilk ve son elemanlarını diziden çıkartın. (.pop ve .shift metodlarını kullanın)
  */
 //3a çözümü
-/* kodlar buraya */
 
+ let ilkmeyve = meyveler.shift();
+ console.log(ilkmeyve);
 
-
-
+ let sonmeyve = meyveler.pop();
+ console.log(sonmeyve);
 
  
 /* 			3b.  Bir tavşan ve bir kirpi arkadaşlar sebzeler dizimizin peşine düştü. Tavşan => 🐇 , Kirpi=> 🦔 , Tavşanla kirpi sebzeleri ele geçirmek için bir plan kurdular. Tavşan diziye önden saldıracak, kirpi ise arkalarından dolaşacak. Varsayalım ki arkadaşların planları başarılı oldu. Tavşanı dizinin ilk elemanına 🐇, Kirpiyi dizinin son elemanına ekleyin 🦔 
 */
 //3b çözümü
 /* kodlar buraya */
+let tavsan = "\uD83D\uDC07";
+let kirpi = "\uD83E\uDD94";
 
+// sebzeler dizisinin başına tavşanı .unshift metodu ile ekle
+sebzeler.unshift(tavsan);
 
+// sebzeler dizisinin sonuna kirpiyi .push metodu ile ekle
+sebzeler.push(kirpi);
 
-
-
+// sebzeler dizisinin güncel halini console.log ile yazdır
+console.log(sebzeler);
 
 
 
@@ -154,7 +169,11 @@ function paragrafOlustur(/* kodlar buraya */ ){
 	//3c çözümü
 /* kodlar buraya */
 
-var manav;
+var manav = [];
+
+manav = meyveler.concat(sebzeler);
+console.log(manav);
+
 
 
 
@@ -169,11 +188,31 @@ var manav;
 				yani hem :d hem de :D sembolleri 😁'a dönüşmelidir. bunun için (.toUpperCase ve .toLowerCase metotlarından istediğinizi kullanabilirsiniz.)
 			4. elde edilen string döndürülecek
  */
+			
+			function emojileriDonustur(mesaj, emojiler) {
+				// mesajı küçük harfe çevir
+				mesaj = mesaj.toLowerCase();
+				//mesajın ilk harfi büyük olsun
+				mesaj = mesaj[0].toUpperCase() + mesaj.slice(1);
+				// emojiler nesnesinin anahtarlarını bir diziye al
+				let semboller = Object.keys(emojiler);
+				// her bir sembol için mesajda arama yap ve değiştirme yap
+				for (let sembol of semboller) {
+				  // sembolü küçük harfe çevir
+				  sembol = sembol.toLowerCase();
+				  // mesajda sembol varsa emoji ile değiştir
+				  if (mesaj.includes(sembol)) {
+					mesaj = mesaj.replaceAll(sembol, emojiler[sembol]);
+				  }
+				}
+				// sonucu döndür
+				return mesaj;
+			  }
 
-function emojileriDonustur(/* kodlar buraya */){
-/* kodlar buraya */
+			 
 
-}
+
+
 
 
 
